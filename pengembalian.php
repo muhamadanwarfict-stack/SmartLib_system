@@ -58,6 +58,61 @@ $peminjaman_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengembalian - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css?v=2.1">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -227,12 +282,14 @@ $peminjaman_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <button type="submit" class="btn btn-primary">Proses Pengembalian</button>
+                <button type="button" class="btn btn-secondary" onclick="hideModal()">Batal</button>
             </form>
         </div>
     </div>
 
     <script>
         function prosesKembali(data) {
+            console.log('Data:', data); // Debug
             document.getElementById('return_id').value = data.id;
             document.getElementById('return_buku_id').value = data.buku_id;
             document.getElementById('return_no_peminjaman').value = data.no_peminjaman;
@@ -262,7 +319,13 @@ $peminjaman_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         }
 
-        document.getElementById('return_tanggal_dikembalikan').addEventListener('change', hitungDenda);
+        // Event listener untuk perubahan tanggal
+        document.addEventListener('DOMContentLoaded', function() {
+            const tglDikembalikanInput = document.getElementById('return_tanggal_dikembalikan');
+            if (tglDikembalikanInput) {
+                tglDikembalikanInput.addEventListener('change', hitungDenda);
+            }
+        });
 
         window.onclick = function(event) {
             const modal = document.getElementById('returnModal');
