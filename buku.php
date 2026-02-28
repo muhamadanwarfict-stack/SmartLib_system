@@ -1,4 +1,3 @@
-Tesssss
 <?php
 require_once 'config/config.php';
 requireRole(['admin', 'petugas']);
@@ -249,6 +248,7 @@ $kategori_list = $stmt_kategori->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Tahun</th>
                                 <th>Stok</th>
                                 <th>Tersedia</th>
+                                <th>Lokasi Rak</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -262,6 +262,7 @@ $kategori_list = $stmt_kategori->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $row['tahun_terbit']; ?></td>
                                 <td><?php echo $row['jumlah_total']; ?></td>
                                 <td><?php echo $row['jumlah_tersedia']; ?></td>
+                                <td><?php echo $row['lokasi_rak'] ?? '-'; ?></td>
                                 <td>
                                     <button class="btn btn-sm btn-info" onclick='editBuku(<?php echo json_encode($row); ?>)'>Edit</button>
                                     <button class="btn btn-sm btn-danger" onclick="deleteBuku(<?php echo $row['id']; ?>)">Hapus</button>
