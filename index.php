@@ -1,11 +1,13 @@
 <?php
 require_once 'config/config.php';
 
-// Redirect to login if not logged in, otherwise redirect to dashboard
+// Redirect to dashboard if logged in, otherwise show landing page
 if (isLoggedIn()) {
     header('Location: dashboard.php');
-} else {
-    header('Location: login.php');
+    exit();
 }
+
+// Show landing page
+header('Location: landing.php');
 exit();
 ?>
